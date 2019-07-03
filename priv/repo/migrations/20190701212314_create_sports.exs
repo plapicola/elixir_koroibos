@@ -7,6 +7,5 @@ defmodule Koroibos.Repo.Migrations.CreateSports do
 
       timestamps()
     end
-
   end
 end
