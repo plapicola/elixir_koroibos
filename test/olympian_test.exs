@@ -64,8 +64,10 @@ defmodule Koroibos.OlympianTest do
     changeset = Olympian.changeset(%Olympian{}, %{@valid_attrs | sex: :Female})
     invalid_changeset = Olympian.changeset(%Olympian{}, %{@valid_attrs | sex: :anything})
 
+    require IEx; IEx.pry
+
     assert changeset.valid?
     refute invalid_changeset.valid?
-    assert {:sex, "must be male or female"} in changeset.errors
+    assert {:sex, "must be male or female"} in invalid_changeset.errors
   end
 end
