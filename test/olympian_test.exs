@@ -59,4 +59,13 @@ defmodule Koroibos.OlympianTest do
       refute changeset.valid?
       assert {:weight, "is required"} in changeset.errors
    end
+
+   test "Sex field must be male or female" do
+      changeset = Olympian.changeset(%Olympian{}, %{@valid_attrs | sex: :Female})
+      invalid_changeset = Olympian.changeset(%Olympian{}, %{@valid_attrs | sex: :anything})
+
+      assert changeset.valid?
+      refute invalid_changeset.valid?
+      assert {:sex, "must be male or female"} in changeset.errors
+   end
 end
