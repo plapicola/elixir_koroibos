@@ -20,8 +20,9 @@ defmodule Koroibos.Olympian do
     olympian
     |> cast(attrs, [:name, :age, :height, :weight, :sex])
     |> validate_required([:name, :age, :height, :weight, :sex])
-    |> validate_number(:age, greater_than: 0)
-    |> validate_number(:age, less_than: 100)
+    |> validate_number(:age, greater_than: 0, less_than: 100)
+    |> validate_number(:height, greater_than: 0)
+    |> validate_number(:weight, greater_than: 0)
     |> validate_inclusion(:sex, [:Male, :Female])
   end
 end

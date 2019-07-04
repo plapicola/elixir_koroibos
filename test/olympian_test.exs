@@ -71,7 +71,7 @@ defmodule Koroibos.OlympianTest do
     changeset = Olympian.changeset(%Olympian{}, %{@valid_attrs | weight: 0})
 
     refute changeset.valid?
-    assert %{height: ["must be greater tha 0"]} == errors_on(changeset)
+    assert %{weight: ["must be greater than 0"]} == errors_on(changeset)
   end
 
   test "Sex field must be male or female" do
