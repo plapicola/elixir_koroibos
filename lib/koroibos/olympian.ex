@@ -11,6 +11,8 @@ defmodule Koroibos.Olympian do
     field :name, :string
     field :sex, SexEnum
     field :weight, :integer
+    belongs_to :team, Koroibos.Team
+    belongs_to :sport, Koroibos.Sport
 
     timestamps()
   end
@@ -18,8 +20,8 @@ defmodule Koroibos.Olympian do
   @doc false
   def changeset(olympian, attrs) do
     olympian
-    |> cast(attrs, [:name, :age, :height, :weight, :sex])
-    |> validate_required([:name, :age, :height, :weight, :sex])
+    |> cast(attrs, [:name, :age, :height, :weight, :sex, :team_id, :sport_id])
+    |> validate_required([:name, :age, :height, :weight, :sex, :team_id, :sport_id])
     |> validate_number(:age, greater_than: 0, less_than: 100)
     |> validate_number(:height, greater_than: 0)
     |> validate_number(:weight, greater_than: 0)
