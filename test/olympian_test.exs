@@ -53,11 +53,25 @@ defmodule Koroibos.OlympianTest do
     assert %{height: ["can't be blank"]} == errors_on(changeset)
   end
 
+  test "Height must be greater than 0" do
+    changeset = Olympian.changeset(%Olympian{}, %{@valid_attrs | height: 0})
+
+    refute changeset.valid?
+    assert %{height: ["must be greater than 0"]} == errors_on(changeset)
+  end
+
   test "Weight is required" do
     changeset = Olympian.changeset(%Olympian{}, Map.delete(@valid_attrs, :weight))
 
     refute changeset.valid?
     assert %{weight: ["can't be blank"]} == errors_on(changeset)
+  end
+
+  test "Weight must be greater than 0" do
+    changeset = Olympian.changeset(%Olympian{}, %{@valid_attrs | weight: 0})
+
+    refute changeset.valid?
+    assert %{height: ["must be greater tha 0"]} == errors_on(changeset)
   end
 
   test "Sex field must be male or female" do
