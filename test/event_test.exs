@@ -26,7 +26,7 @@ defmodule Koroibos.EventTest do
    end
 
    test "Sport is required" do
-      changeset = Event.changeset(%Event{}, Map.delete(@valid_attrs, :name))
+      changeset = Event.changeset(%Event{}, Map.delete(@valid_attrs, :sport_id))
 
       refute changeset.valid?
       assert {:sport_id, ["can't be blank"]} in errors_on(changeset)
