@@ -3,7 +3,7 @@ defmodule Koroibos.OlympianTest do
 
   alias Koroibos.Olympian
 
-  @valid_attrs %{name: "Tim", age: 29, height: 95, weight: 90, sex: :Male}
+  @valid_attrs %{name: "Tim", age: 29, height: 95, weight: 90, sex: :Male, sport_id: 1, team_id: 1}
 
   test "Valid olympians" do
     changeset = Olympian.changeset(%Olympian{}, @valid_attrs)
@@ -15,63 +15,63 @@ defmodule Koroibos.OlympianTest do
     changeset = Olympian.changeset(%Olympian{}, Map.delete(@valid_attrs, :name))
 
     refute changeset.valid?
-    assert %{name: ["can't be blank"]} == errors_on(changeset)
+    assert {:name, ["can't be blank"]} in errors_on(changeset)
   end
 
   test "name must at least length 1" do
     changeset = Olympian.changeset(%Olympian{}, %{@valid_attrs | name: ""})
 
     refute changeset.valid?
-    assert %{name: ["can't be blank"]} == errors_on(changeset)
+    assert {:name, ["can't be blank"]} in errors_on(changeset)
   end
 
   test "Age is required" do
     changeset = Olympian.changeset(%Olympian{}, Map.delete(@valid_attrs, :age))
 
     refute changeset.valid?
-    assert %{age: ["can't be blank"]} == errors_on(changeset)
+    assert {:age, ["can't be blank"]} in errors_on(changeset)
   end
 
   test "Age must be greater than 0" do
     changeset = Olympian.changeset(%Olympian{}, %{@valid_attrs | age: 0})
 
     refute changeset.valid?
-    assert %{age: ["must be greater than 0"]} == errors_on(changeset)
+    assert {:age, ["must be greater than 0"]} in errors_on(changeset)
   end
 
   test "Age must be less than 100" do
     changeset = Olympian.changeset(%Olympian{}, %{@valid_attrs | age: 100})
 
     refute changeset.valid?
-    assert %{age: ["must be less than 100"]} == errors_on(changeset)
+    assert {:age, ["must be less than 100"]} in errors_on(changeset)
   end
 
   test "Height is required" do
     changeset = Olympian.changeset(%Olympian{}, Map.delete(@valid_attrs, :height))
 
     refute changeset.valid?
-    assert %{height: ["can't be blank"]} == errors_on(changeset)
+    assert {:height, ["can't be blank"]} in errors_on(changeset)
   end
 
   test "Height must be greater than 0" do
     changeset = Olympian.changeset(%Olympian{}, %{@valid_attrs | height: 0})
 
     refute changeset.valid?
-    assert %{height: ["must be greater than 0"]} == errors_on(changeset)
+    assert {:height, ["must be greater than 0"]} in errors_on(changeset)
   end
 
   test "Weight is required" do
     changeset = Olympian.changeset(%Olympian{}, Map.delete(@valid_attrs, :weight))
 
     refute changeset.valid?
-    assert %{weight: ["can't be blank"]} == errors_on(changeset)
+    assert {:weight, ["can't be blank"]} in errors_on(changeset)
   end
 
   test "Weight must be greater than 0" do
     changeset = Olympian.changeset(%Olympian{}, %{@valid_attrs | weight: 0})
 
     refute changeset.valid?
-    assert %{weight: ["must be greater than 0"]} == errors_on(changeset)
+    assert {:weight, ["must be greater than 0"]} in errors_on(changeset)
   end
 
   test "Sex field must be male or female" do
@@ -80,6 +80,6 @@ defmodule Koroibos.OlympianTest do
 
     assert changeset.valid?
     refute invalid_changeset.valid?
-    assert %{sex: ["is invalid"]} == errors_on(invalid_changeset)
+    assert {:sex, ["is invalid"]} in errors_on(invalid_changeset)
   end
 end
