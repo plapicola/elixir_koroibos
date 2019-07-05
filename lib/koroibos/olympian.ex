@@ -3,7 +3,7 @@ defmodule Koroibos.Olympian do
   import Ecto.Changeset
   import EctoEnum
 
-  defenum SexEnum, Male: 0, Female: 1
+  defenum(SexEnum, Male: 0, Female: 1)
 
   schema "olympians" do
     field :age, :integer

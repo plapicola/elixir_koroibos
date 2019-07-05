@@ -11,6 +11,5 @@ defmodule Koroibos.Repo.Migrations.CreateOlympians do
 
       timestamps()
     end
-
   end
 end

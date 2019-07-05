@@ -1,36 +1,34 @@
 defmodule Koroibos.EventTest do
-   use Koroibos.DataCase
+  use Koroibos.DataCase
 
-   alias Koroibos.Event
+  alias Koroibos.Event
 
-   @valid_attrs %{name: "An Event", sport_id: 1}
+  @valid_attrs %{name: "An Event", sport_id: 1}
 
-   test "Valid events" do
-      changeset = Event.changeset(%Event{}, @valid_attrs)
+  test "Valid events" do
+    changeset = Event.changeset(%Event{}, @valid_attrs)
 
-      assert changeset.valid?
-   end
+    assert changeset.valid?
+  end
 
-   test "Name is required" do
-      changeset = Event.changeset(%Event{}, Map.delete(@valid_attrs, :name))
+  test "Name is required" do
+    changeset = Event.changeset(%Event{}, Map.delete(@valid_attrs, :name))
 
-      refute changeset.valid?
-      assert {:name, ["can't be blank"]} in errors_on(changeset)
-   end
+    refute changeset.valid?
+    assert {:name, ["can't be blank"]} in errors_on(changeset)
+  end
 
-   test "Name must be at least 1 character in length" do
-      changeset = Event.changeset(%Event{}, %{@valid_attrs | name: ""})
+  test "Name must be at least 1 character in length" do
+    changeset = Event.changeset(%Event{}, %{@valid_attrs | name: ""})
 
-      refute changeset.valid?
-      assert {:name, ["can't be blank"]} in errors_on(changeset)
-   end
+    refute changeset.valid?
+    assert {:name, ["can't be blank"]} in errors_on(changeset)
+  end
 
-   test "Sport is required" do
-      changeset = Event.changeset(%Event{}, Map.delete(@valid_attrs, :sport_id))
+  test "Sport is required" do
+    changeset = Event.changeset(%Event{}, Map.delete(@valid_attrs, :sport_id))
 
-      refute changeset.valid?
-      assert {:sport_id, ["can't be blank"]} in errors_on(changeset)
-   end
-
-
+    refute changeset.valid?
+    assert {:sport_id, ["can't be blank"]} in errors_on(changeset)
+  end
 end

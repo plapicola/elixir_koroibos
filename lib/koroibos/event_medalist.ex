@@ -3,7 +3,7 @@ defmodule Koroibos.EventMedalist do
   import Ecto.Changeset
   import EctoEnum
 
-  defenum MedalEnum, Gold: 0, Silver: 1, Bronze: 2
+  defenum(MedalEnum, Gold: 0, Silver: 1, Bronze: 2)
 
   schema "event_medalists" do
     field :medal, MedalEnum

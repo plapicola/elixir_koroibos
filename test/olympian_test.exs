@@ -3,7 +3,15 @@ defmodule Koroibos.OlympianTest do
 
   alias Koroibos.Olympian
 
-  @valid_attrs %{name: "Tim", age: 29, height: 95, weight: 90, sex: :Male, sport_id: 1, team_id: 1}
+  @valid_attrs %{
+    name: "Tim",
+    age: 29,
+    height: 95,
+    weight: 90,
+    sex: :Male,
+    sport_id: 1,
+    team_id: 1
+  }
 
   test "Valid olympians" do
     changeset = Olympian.changeset(%Olympian{}, @valid_attrs)
