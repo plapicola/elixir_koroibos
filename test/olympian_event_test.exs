@@ -21,19 +21,21 @@ defmodule Koroibos.OlympianEventTest do
       changeset = OlympianEvent.changeset(%OlympianEvent{}, %{})
 
       refute changeset.valid?
-      assert {:olympian_id, ["is required"]} in errors_on(changeset)
-      assert {:event_id, ["is required"]} in errors_on(changeset)
+      assert {:olympian_id, ["can't be blank"]} in errors_on(changeset)
+      assert {:event_id, ["can't be blank"]} in errors_on(changeset)
    end
 
    test "Olympian must exist for record to be valid", %{event: event} do
-      changeset = OlympianEvent.changeset(%OlympianEvent{},%{event_id: event.id, olympian_id: -1})
+      {:error, changeset} = OlympianEvent.changeset(%OlympianEvent{},%{event_id: event.id, olympian_id: -1}) 
+         |> Repo.insert()
 
       refute changeset.valid?
       assert {:olympian, ["does not exist"]} in errors_on(changeset)
    end
 
    test "Event must exist for record to be valid", %{olympian: olympian} do
-      changeset = OlympianEvent.changeset(%OlympianEvent{},%{event_id: -1, olympian_id: olympian.id})
+      {:error, changeset} = OlympianEvent.changeset(%OlympianEvent{},%{event_id: -1, olympian_id: olympian.id}) 
+         |> Repo.insert()
 
       refute changeset.valid?
       assert {:event, ["does not exist"]} in errors_on(changeset)
