@@ -3,8 +3,8 @@ defmodule Koroibos.OlympianEvent do
   import Ecto.Changeset
 
   schema "olympian_events" do
-    field :olympian_id, :id
-    field :event_id, :id
+    belongs_to :olympian, Koroibos.Olympian
+    belongs_to :event, Koroibos.Event
 
     timestamps()
   end
@@ -12,7 +12,9 @@ defmodule Koroibos.OlympianEvent do
   @doc false
   def changeset(olympian_event, attrs) do
     olympian_event
-    |> cast(attrs, [])
-    |> validate_required([])
+    |> cast(attrs, [:olympian_id, :event_id])
+    |> validate_required([:olympian_id, :event_id])
+    |> assoc_constraint(:olympian)
+    |> assoc_constraint(:event)
   end
 end
