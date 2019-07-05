@@ -3,7 +3,7 @@ defmodule Koroibos.EventMedalistTest do
 
    alias Koroibos.{Repo, Olympian, Event, EventMedalist}
 
-   setup_all do
+   setup do
       olympian = %Olympian{name: "Mike", age: 26, height: 90, weight: 90} |> Repo.insert!()
       event = %Event{name: "Hurdles"} |> Repo.insert!()
       {:ok, olympian: olympian, event: event}
@@ -19,21 +19,21 @@ defmodule Koroibos.EventMedalistTest do
       changeset = EventMedalist.changeset(%EventMedalist{}, %{medal: :Gold, event_id: event.id})
 
       refute changeset.valid?
+      assert {:olympian_id, ["can't be blank"]} in errors_on(changeset)
+   end
+   
+   test "Event id is required", %{olympian: olympian} do
+      changeset = EventMedalist.changeset(%EventMedalist{}, %{medal: :Gold, olympian_id: olympian.id})
+      
+      refute changeset.valid?
       assert {:event_id, ["can't be blank"]} in errors_on(changeset)
    end
 
-   test "Event id is required", %{olympian: olympian} do
-      changeset = EventMedalist.changeset(%EventMedalist{}, %{medal: :Gold, olympian_id: olympian.id})
-
-      refute changeset.valid?
-      assert {:olympian_id, ["can't be blank"]} in errors_on(changeset)
-   end
-
-   test "Medals must be Gold, Silver, or Bronze", setup do
-      gold = EventMedalist.changeset(%EventMedalist{}, %{setup | medal: :Gold})
-      silver = EventMedalist.changeset(%EventMedalist{}, %{setup | medal: :Silver})
-      bronze = EventMedalist.changeset(%EventMedalist{}, %{setup | medal: :Bronze})
-      other = EventMedalist.changeset(%EventMedalist{}, %{setup | medal: :Platinum})
+   test "Medals must be Gold, Silver, or Bronze", %{event: event, olympian: olympian} do
+      gold = EventMedalist.changeset(%EventMedalist{}, %{olympian_id: olympian.id, event_id: event.id, medal: :Gold})
+      silver = EventMedalist.changeset(%EventMedalist{}, %{olympian_id: olympian.id, event_id: event.id, medal: :Silver})
+      bronze = EventMedalist.changeset(%EventMedalist{}, %{olympian_id: olympian.id, event_id: event.id, medal: :Bronze})
+      other = EventMedalist.changeset(%EventMedalist{}, %{olympian_id: olympian.id, event_id: event.id, medal: :Platinum})
 
       assert gold.valid?
       assert silver.valid?
