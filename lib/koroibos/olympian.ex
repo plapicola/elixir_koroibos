@@ -13,6 +13,7 @@ defmodule Koroibos.Olympian do
     field :weight, :integer
     belongs_to :team, Koroibos.Team
     belongs_to :sport, Koroibos.Sport
+    many_to_many :events, Koroibos.Event, join_through: Koroibos.OlympianEvent
 
     timestamps()
   end
