@@ -21,12 +21,30 @@ defmodule Koroibos.EventMedalistTest do
       refute changeset.valid?
       assert {:olympian_id, ["can't be blank"]} in errors_on(changeset)
    end
+
+   test "Olympian must exist", %{event: event} do
+      {:error, changeset} = 
+         EventMedalist.changeset(%EventMedalist{}, %{medal: :Gold, olympian_id: -1, event_id: event.id})
+            |> Repo.insert()
+
+      refute changeset.valid?
+      assert {:olympian, ["does not exist"]} in errors_on(changeset)
+   end
    
    test "Event id is required", %{olympian: olympian} do
       changeset = EventMedalist.changeset(%EventMedalist{}, %{medal: :Gold, olympian_id: olympian.id})
       
       refute changeset.valid?
       assert {:event_id, ["can't be blank"]} in errors_on(changeset)
+   end
+
+   test "Event must exist", %{olympian: olympian} do
+      {:error, changeset} = 
+         EventMedalist.changeset(%EventMedalist{}, %{medal: :Gold, olympian_id: olympian.id, event_id: -1})
+            |> Repo.insert
+
+      refute changeset.valid?
+      assert {:event, ["does not exist"]} in errors_on(changeset)
    end
 
    test "Medals must be Gold, Silver, or Bronze", %{event: event, olympian: olympian} do
