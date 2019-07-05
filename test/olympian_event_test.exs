@@ -1,14 +1,12 @@
 defmodule Koroibos.OlympianEventTest do
    use Koroibos.DataCase
 
-   alias Koroibos.{Team, Sport, OlympianEvent, Repo}
+   alias Koroibos.{Team, Sport, Olympian, OlympianEvent, Repo}
 
    setup do
       team = %Team{name: "USA"} |> Repo.insert!()
       sport = %Sport{name: "Swimming"} |> Repo.insert!()
-      olympian = Ecto.build_assoc(team, :olympians, %{name: "Tim", age: 29, height: 90, weight: 90, sex: :Male} 
-         |> Ecto.Changeset.put_assoc(:sport, sport)
-         |> Repo.insert!())
+      olympian = %Olympian{name: "Mike", age: 27, height: 100, weight: 95, sport_id: sport.id, team_id: team.id} |> Repo.insert!()
       event = Ecto.build_assoc(sport, :events, %{name: "100M Backstroke"}) |> Repo.insert!()
       {:ok, olympian: olympian, event: event}
    end
