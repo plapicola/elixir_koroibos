@@ -18,5 +18,7 @@ defmodule Koroibos.EventMedalist do
     event_medalist
     |> cast(attrs, [:medal, :event_id, :olympian_id])
     |> validate_required([:medal, :event_id, :olympian_id])
+    |> assoc_constraint(:olympian)
+    |> assoc_constraint(:event)
   end
 end
