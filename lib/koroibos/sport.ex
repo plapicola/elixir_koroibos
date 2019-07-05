@@ -5,6 +5,7 @@ defmodule Koroibos.Sport do
   schema "sports" do
     field :name, :string
     has_many :olympians, Koroibos.Olympian
+    has_many :events, Koroibos.Event
 
     timestamps()
   end
