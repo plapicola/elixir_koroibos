@@ -36,5 +36,37 @@ defmodule KoroibosWeb.OlympianControllerTest do
 
       assert json_response(conn, 200) == expected
     end
+
+    test "Can optionally filter for youngest", %{conn: conn, tim: tim} do
+      conn = get(conn, "/api/v1/olympians?age=youngest")
+
+      expected = [
+        %{
+          "name" => tim.name,
+          "age" => tim.age,
+          "team" => "USA",
+          "sport" => "Taekwondo",
+          "total_medals_won" => 1
+        }
+      ]
+
+      assert json_response(conn, 200) == expected
+    end
+
+    test "Can optionally filter for oldest", %{conn: conn, jim: jim} do
+      conn = get(conn, "/api/v1/olympians?age=oldest")
+
+      expected = [
+        %{
+          "name" => jim.name,
+          "age" => jim.age,
+          "team" => "USA",
+          "sport" => "Taekwondo",
+          "total_medals_won" => 0
+        }
+      ]
+
+      assert json_response(conn, 200) == expected
+    end
   end
 end
