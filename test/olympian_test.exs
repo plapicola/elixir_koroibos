@@ -108,7 +108,6 @@ defmodule Koroibos.OlympianTest do
       assert is_list(result)
       assert length(result) == 2
       assert [result_1, result_2] = result
-      assert result_1.id == tim.id
       assert result_1.name == tim.name
       assert result_1.age == tim.age
       assert result_1.team == "USA"
