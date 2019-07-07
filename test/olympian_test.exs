@@ -102,7 +102,7 @@ defmodule Koroibos.OlympianTest do
       {:ok, tim: tim, jim: jim}
     end
 
-    test "Fetches all olympians from the database wwith medal count and relationships", %{tim: tim, jim: jim} do
+    test "Fetches all olympians from the database wwith medal count and relationships", %{tim: tim} do
       result = Olympian.all_with_medals
 
       assert is_list(result)
@@ -112,8 +112,8 @@ defmodule Koroibos.OlympianTest do
       assert result_1.age == tim.age
       assert result_1.team == "USA"
       assert result_1.sport == "Taekwondo"
-      assert result_1.total_medal_count == 1
-      assert result_2.total_medal_count == 0
+      assert result_1.total_medals_won == 1
+      assert result_2.total_medals_won == 0
     end
   end
 end

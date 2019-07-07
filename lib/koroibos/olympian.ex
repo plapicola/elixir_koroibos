@@ -44,7 +44,7 @@ defmodule Koroibos.Olympian do
       left_join: medals in assoc(o, :medals),
       group_by: [s.name, t.name, o.age, o.name, o.id],
       order_by: [asc: o.id],
-      select: %{name: o.name, age: o.age, team: t.name, sport: s.name, total_medal_count: count(medals.id)}
+      select: %{name: o.name, age: o.age, team: t.name, sport: s.name, total_medals_won: count(medals.id)}
     )
   end
 end
