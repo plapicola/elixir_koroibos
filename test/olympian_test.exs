@@ -195,9 +195,9 @@ defmodule Koroibos.OlympianTest do
 
       assert is_map(result)
       assert result.total_competing_olympians == 3
-      assert result.average_male_weight == 95.0
-      assert result.average_female_weight == 80.0
-      assert result.average_age == 30.0
+      assert Decimal.eq?(result.average_male_weight, Decimal.from_float(95.0))
+      assert Decimal.eq?(result.average_female_weight, Decimal.from_float(80.0))
+      assert Decimal.eq?(result.average_age, Decimal.from_float(30.0))
     end
   end
 end
