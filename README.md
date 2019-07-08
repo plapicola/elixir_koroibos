@@ -53,22 +53,24 @@ Provides a list of all olympians in the system with the following information:
 
 Sample response:
 ``` JSON
-[
-  {
-    "name": "Olympian 1",
-    "age": 20,
-    "sport": "Swimming",
-    "team": "USA",
-    "total_medals_won": 2
-  },
-  {
-    "name": "Olympian 2",
-    "age": 18,
-    "sport": "Taekwondo",
-    "team": "South Korea",
-    "total_medals_won": 4
-  }
-]
+{
+  "olympians": [
+    {
+      "name": "Olympian 1",
+      "age": 20,
+      "sport": "Swimming",
+      "team": "USA",
+      "total_medals_won": 2
+    },
+    {
+      "name": "Olympian 2",
+      "age": 18,
+      "sport": "Taekwondo",
+      "team": "South Korea",
+      "total_medals_won": 4
+    }
+  ]
+}
 ```
 
 Additionally, the endpoint accepts an optional parameter, `age`, with the values of either `youngest` or `oldest`. When passed, the endpoint will only return the youngest or oldest olympian in the system in the array of olympians.
