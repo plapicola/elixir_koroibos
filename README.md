@@ -12,6 +12,8 @@ The application requires the follwing dependencies to be installed:
 - Phoenix 1.4.8
 - PostgreSQL 11.1
 
+#### Setup
+
 To perform of the initial setup of the application, run the following:
 ``` bash
 mix deps.get
@@ -20,6 +22,8 @@ mix ecto.migrate
 ```
 
 This will fetch the required dependencies for the application and prepare the database.
+
+#### Starting the Application
 
 To start the application locally, use the command `mix phx.server`. The application will be started and listen on port 4000 by default.
 
