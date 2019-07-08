@@ -1,7 +1,7 @@
 defmodule Koroibos.OlympianTest do
   use Koroibos.DataCase
 
-  alias Koroibos.Olympian
+  alias Koroibos.{Olympian, Team, Sport, Event, EventMedalist}
 
   @valid_attrs %{
     name: "Tim",
@@ -89,5 +89,96 @@ defmodule Koroibos.OlympianTest do
     assert changeset.valid?
     refute invalid_changeset.valid?
     assert {:sex, ["is invalid"]} in errors_on(invalid_changeset)
+  end
+
+  describe "Olympian.all_with_medals" do
+    setup do
+      usa = %Team{name: "USA"} |> Repo.insert!()
+      taekwondo = %Sport{name: "Taekwondo"} |> Repo.insert!()
+
+      tim =
+        %Olympian{name: "Tim", age: 29, sport_id: taekwondo.id, team_id: usa.id} |> Repo.insert!()
+
+      jim =
+        %Olympian{name: "Jim", age: 55, sport_id: taekwondo.id, team_id: usa.id} |> Repo.insert!()
+
+      event = %Event{name: "Sparring", sport_id: taekwondo.id} |> Repo.insert!()
+      %EventMedalist{olympian_id: tim.id, event_id: event.id, medal: :Gold} |> Repo.insert!()
+      {:ok, tim: tim, jim: jim}
+    end
+
+    test "Fetches all olympians from the database with medal count and relationships", %{tim: tim} do
+      result = Olympian.all_with_medals()
+
+      assert is_list(result)
+      assert length(result) == 2
+      assert [result_1, result_2] = result
+      assert result_1.name == tim.name
+      assert result_1.age == tim.age
+      assert result_1.team == "USA"
+      assert result_1.sport == "Taekwondo"
+      assert result_1.total_medals_won == 1
+      assert result_2.total_medals_won == 0
+    end
+  end
+
+  describe "Olympian.youngest" do
+    setup do
+      usa = %Team{name: "USA"} |> Repo.insert!()
+      taekwondo = %Sport{name: "Taekwondo"} |> Repo.insert!()
+
+      tim =
+        %Olympian{name: "Tim", age: 29, sport_id: taekwondo.id, team_id: usa.id} |> Repo.insert!()
+
+      jim =
+        %Olympian{name: "Jim", age: 55, sport_id: taekwondo.id, team_id: usa.id} |> Repo.insert!()
+
+      event = %Event{name: "Sparring", sport_id: taekwondo.id} |> Repo.insert!()
+      %EventMedalist{olympian_id: tim.id, event_id: event.id, medal: :Gold} |> Repo.insert!()
+      {:ok, tim: tim, jim: jim}
+    end
+
+    test "Fetches the youngest olympian with medal count and relationships", %{tim: tim} do
+      result = Olympian.youngest()
+
+      assert is_list(result)
+      assert length(result) == 1
+      assert [result_1] = result
+      assert result_1.name == tim.name
+      assert result_1.age == tim.age
+      assert result_1.team == "USA"
+      assert result_1.sport == "Taekwondo"
+      assert result_1.total_medals_won == 1
+    end
+  end
+
+  describe "Olympian.oldest" do
+    setup do
+      usa = %Team{name: "USA"} |> Repo.insert!()
+      taekwondo = %Sport{name: "Taekwondo"} |> Repo.insert!()
+
+      tim =
+        %Olympian{name: "Tim", age: 29, sport_id: taekwondo.id, team_id: usa.id} |> Repo.insert!()
+
+      jim =
+        %Olympian{name: "Jim", age: 55, sport_id: taekwondo.id, team_id: usa.id} |> Repo.insert!()
+
+      event = %Event{name: "Sparring", sport_id: taekwondo.id} |> Repo.insert!()
+      %EventMedalist{olympian_id: tim.id, event_id: event.id, medal: :Gold} |> Repo.insert!()
+      {:ok, tim: tim, jim: jim}
+    end
+
+    test "Fetches the youngest olympian with medal count and relationships", %{jim: jim} do
+      result = Olympian.oldest()
+
+      assert is_list(result)
+      assert length(result) == 1
+      assert [result_1] = result
+      assert result_1.name == jim.name
+      assert result_1.age == jim.age
+      assert result_1.team == "USA"
+      assert result_1.sport == "Taekwondo"
+      assert result_1.total_medals_won == 0
+    end
   end
 end
