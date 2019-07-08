@@ -39,7 +39,7 @@ defmodule Koroibos.Olympian do
   def all_with_medals do
     Repo.all(
       from o in base_olympians_query(),
-      order_by: [asc: o.id]
+        order_by: [asc: o.id]
     )
   end
 
@@ -50,8 +50,8 @@ defmodule Koroibos.Olympian do
   def youngest do
     Repo.all(
       from o in base_olympians_query(),
-      order_by: [asc: o.age],
-      limit: 1
+        order_by: [asc: o.age],
+        limit: 1
     )
   end
 
@@ -62,8 +62,8 @@ defmodule Koroibos.Olympian do
   def oldest do
     Repo.all(
       from o in base_olympians_query(),
-      order_by: [desc: o.age],
-      limit: 1
+        order_by: [desc: o.age],
+        limit: 1
     )
   end
 
@@ -71,10 +71,16 @@ defmodule Koroibos.Olympian do
   @spec base_olympians_query() :: Ecto.Query
   defp base_olympians_query do
     from o in Olympian,
-    inner_join: s in assoc(o, :sport),
-    inner_join: t in assoc(o, :team),
-    left_join: medals in assoc(o, :medals),
-    group_by: [s.name, t.name, o.age, o.name, o.id],
-    select: %{name: o.name, age: o.age, team: t.name, sport: s.name, total_medals_won: count(medals.id)}
+      inner_join: s in assoc(o, :sport),
+      inner_join: t in assoc(o, :team),
+      left_join: medals in assoc(o, :medals),
+      group_by: [s.name, t.name, o.age, o.name, o.id],
+      select: %{
+        name: o.name,
+        age: o.age,
+        team: t.name,
+        sport: s.name,
+        total_medals_won: count(medals.id)
+      }
   end
 end

@@ -5,16 +5,16 @@ defmodule KoroibosWeb.Api.V1.OlympianController do
 
   def index(conn, %{"age" => "youngest"}) do
     conn
-    |> render("index.json", %{olympians: Olympian.youngest})
+    |> render("index.json", %{olympians: Olympian.youngest()})
   end
 
   def index(conn, %{"age" => "oldest"}) do
     conn
-    |> render("index.json", %{olympians: Olympian.oldest})
+    |> render("index.json", %{olympians: Olympian.oldest()})
   end
 
   def index(conn, _params) do
     conn
-    |> render("index.json", %{olympians: Olympian.all_with_medals})
+    |> render("index.json", %{olympians: Olympian.all_with_medals()})
   end
 end

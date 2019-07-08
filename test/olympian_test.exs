@@ -95,15 +95,20 @@ defmodule Koroibos.OlympianTest do
     setup do
       usa = %Team{name: "USA"} |> Repo.insert!()
       taekwondo = %Sport{name: "Taekwondo"} |> Repo.insert!()
-      tim = %Olympian{name: "Tim", age: 29, sport_id: taekwondo.id, team_id: usa.id} |> Repo.insert!()
-      jim = %Olympian{name: "Jim", age: 55, sport_id: taekwondo.id, team_id: usa.id} |> Repo.insert!()
+
+      tim =
+        %Olympian{name: "Tim", age: 29, sport_id: taekwondo.id, team_id: usa.id} |> Repo.insert!()
+
+      jim =
+        %Olympian{name: "Jim", age: 55, sport_id: taekwondo.id, team_id: usa.id} |> Repo.insert!()
+
       event = %Event{name: "Sparring", sport_id: taekwondo.id} |> Repo.insert!()
       %EventMedalist{olympian_id: tim.id, event_id: event.id, medal: :Gold} |> Repo.insert!()
       {:ok, tim: tim, jim: jim}
     end
 
     test "Fetches all olympians from the database with medal count and relationships", %{tim: tim} do
-      result = Olympian.all_with_medals
+      result = Olympian.all_with_medals()
 
       assert is_list(result)
       assert length(result) == 2
@@ -121,15 +126,20 @@ defmodule Koroibos.OlympianTest do
     setup do
       usa = %Team{name: "USA"} |> Repo.insert!()
       taekwondo = %Sport{name: "Taekwondo"} |> Repo.insert!()
-      tim = %Olympian{name: "Tim", age: 29, sport_id: taekwondo.id, team_id: usa.id} |> Repo.insert!()
-      jim = %Olympian{name: "Jim", age: 55, sport_id: taekwondo.id, team_id: usa.id} |> Repo.insert!()
+
+      tim =
+        %Olympian{name: "Tim", age: 29, sport_id: taekwondo.id, team_id: usa.id} |> Repo.insert!()
+
+      jim =
+        %Olympian{name: "Jim", age: 55, sport_id: taekwondo.id, team_id: usa.id} |> Repo.insert!()
+
       event = %Event{name: "Sparring", sport_id: taekwondo.id} |> Repo.insert!()
       %EventMedalist{olympian_id: tim.id, event_id: event.id, medal: :Gold} |> Repo.insert!()
       {:ok, tim: tim, jim: jim}
     end
 
     test "Fetches the youngest olympian with medal count and relationships", %{tim: tim} do
-      result = Olympian.youngest
+      result = Olympian.youngest()
 
       assert is_list(result)
       assert length(result) == 1
@@ -146,15 +156,20 @@ defmodule Koroibos.OlympianTest do
     setup do
       usa = %Team{name: "USA"} |> Repo.insert!()
       taekwondo = %Sport{name: "Taekwondo"} |> Repo.insert!()
-      tim = %Olympian{name: "Tim", age: 29, sport_id: taekwondo.id, team_id: usa.id} |> Repo.insert!()
-      jim = %Olympian{name: "Jim", age: 55, sport_id: taekwondo.id, team_id: usa.id} |> Repo.insert!()
+
+      tim =
+        %Olympian{name: "Tim", age: 29, sport_id: taekwondo.id, team_id: usa.id} |> Repo.insert!()
+
+      jim =
+        %Olympian{name: "Jim", age: 55, sport_id: taekwondo.id, team_id: usa.id} |> Repo.insert!()
+
       event = %Event{name: "Sparring", sport_id: taekwondo.id} |> Repo.insert!()
       %EventMedalist{olympian_id: tim.id, event_id: event.id, medal: :Gold} |> Repo.insert!()
       {:ok, tim: tim, jim: jim}
     end
 
     test "Fetches the youngest olympian with medal count and relationships", %{jim: jim} do
-      result = Olympian.oldest
+      result = Olympian.oldest()
 
       assert is_list(result)
       assert length(result) == 1

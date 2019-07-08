@@ -6,8 +6,13 @@ defmodule KoroibosWeb.OlympianControllerTest do
   setup do
     usa = %Team{name: "USA"} |> Repo.insert!()
     taekwondo = %Sport{name: "Taekwondo"} |> Repo.insert!()
-    tim = %Olympian{name: "Tim", age: 29, sport_id: taekwondo.id, team_id: usa.id} |> Repo.insert!()
-    jim = %Olympian{name: "Jim", age: 55, sport_id: taekwondo.id, team_id: usa.id} |> Repo.insert!()
+
+    tim =
+      %Olympian{name: "Tim", age: 29, sport_id: taekwondo.id, team_id: usa.id} |> Repo.insert!()
+
+    jim =
+      %Olympian{name: "Jim", age: 55, sport_id: taekwondo.id, team_id: usa.id} |> Repo.insert!()
+
     event = %Event{name: "Sparring", sport_id: taekwondo.id} |> Repo.insert!()
     %EventMedalist{olympian_id: tim.id, event_id: event.id, medal: :Gold} |> Repo.insert!()
     {:ok, tim: tim, jim: jim}
