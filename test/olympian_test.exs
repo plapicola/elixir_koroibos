@@ -181,4 +181,23 @@ defmodule Koroibos.OlympianTest do
       assert result_1.total_medals_won == 0
     end
   end
+
+  describe "Olympian.all_olympian_stats" do
+    setup do
+      male_olympian_1 = %Olympian{age: 25, weight: 90, sex: :Male} |> Repo.insert!()
+      male_olympian_2 = %Olympian{age: 35, weight: 100, sex: :Male} |> Repo.insert!()
+      female_olympian = %Olympian{age: 30, weight: 80, sex: :Female} |> Repo.insert!()
+      {:ok, male_1: male_olympian_1, male_2: male_olympian_2, female_1: female_olympian}
+    end
+
+    test "Returns the count, average age by sex, and average age of all olympians" do
+      result = Olympian.all_olympian_stats
+
+      assert is_map(result)
+      assert result.total_competing_olympians == 3
+      assert result.average_male_weight == 95.0
+      assert result.average_female_weight == 80.0
+      assert result.average_age == 30.0
+    end
+  end
 end
