@@ -7,7 +7,7 @@ defmodule KoroibosWeb.Api.V1.OlympianView do
   """
 
   def render("index.json", %{olympians: olympians}) do
-    render_many(olympians, OlympianView, "olympian.json")
+    %{olympians: render_many(olympians, OlympianView, "olympian.json")}
   end
 
   def render("olympian.json", %{olympian: olympian}) do
