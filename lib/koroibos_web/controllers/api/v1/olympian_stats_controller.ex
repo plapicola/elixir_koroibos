@@ -4,6 +4,6 @@ defmodule KoroibosWeb.Api.V1.OlympianStatsController do
   alias Koroibos.Olympian
 
   def index(conn, _params) do
-    conn |> render("index.json", Olympian.all_olympian_stats)
+    conn |> render("index.json", %{olympian_stats: Olympian.all_olympian_stats})
   end
 end
