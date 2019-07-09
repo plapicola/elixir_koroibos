@@ -22,7 +22,8 @@ defmodule Koroibos.Event do
   def all_by_sport do
     Repo.all(
       from s in Koroibos.Sport,
-      preload: [:events]
+      join: e in assoc(s, :events),
+      preload: [events: e]
     )
   end
 end
