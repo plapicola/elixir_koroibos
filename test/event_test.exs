@@ -49,8 +49,8 @@ defmodule Koroibos.EventTest do
       assert length(result) == 2
       assert [sport_1, sport_2] = result
       assert sport_1.name == setup.taekwondo.name
-      assert sport_1.sports == [setup.sparring]
-      assert sport_2.sports == [setup.freestyle, setup.backstroke]
+      assert sport_1.events == [setup.sparring]
+      assert sport_2.events == [setup.freestyle, setup.backstroke]
     end
   end
 end

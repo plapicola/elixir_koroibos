@@ -1,6 +1,8 @@
 defmodule Koroibos.Event do
   use Ecto.Schema
-  import Ecto.Changeset
+  import Ecto.{Changeset, Query}
+
+  alias Koroibos.Repo
 
   schema "events" do
     field :name, :string
@@ -15,5 +17,12 @@ defmodule Koroibos.Event do
     event
     |> cast(attrs, [:name, :sport_id])
     |> validate_required([:name, :sport_id])
+  end
+
+  def all_by_sport do
+    Repo.all(
+      from s in Koroibos.Sport,
+      preload: [:events]
+    )
   end
 end
