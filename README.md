@@ -98,6 +98,43 @@ Sample response:
 }
 ```
 
+### GET /api/v1/events
+
+Provides a list of all events in the system, grouped by the sport that the event is affiliated with. This endpoint was adjusted from the original specifications following discussion with the project managaer and noting that the event_medalist endpoint requires the event IDs in order to access, but that the implementation requested did not provide this information. Following this discussion, this endpoint now provides the following information:
+
+- The name of the sport
+- The events under that sport, including the id, and the name
+
+Sample response:
+``` JSON
+{
+  "events": [
+    {
+      "sport": "Taekwondo",
+      "events": [
+        {
+          "id": 1,
+          "name": "Sparring"
+        }
+      ]
+    },
+    {
+      "sport": "Swimming",
+      "events": [
+        {
+          "id": 5,
+          "name": "100M Freestyle"
+        },
+        {
+          "id": 9,
+          "name": "100M Backstroke"
+        }
+      ]
+    }
+  ]
+}
+```
+
 ## Original Requirements
 
 (Requirements Originally found [here](https://github.com/dionew1/backend-curriculum-site/blob/gh-pages/module4/projects/take_home_challenge/prompts/olympic_spec.md))
