@@ -14,19 +14,12 @@ defmodule Koroibos.Api.V1.OlympianStatsControllerTest do
     test "Returns the total olympians in the system, along with average weight and age", %{conn: conn} do
       conn = get(conn, "/api/v1/olympian_stats")
 
-      expected = %{
-        "olympian_stats" => %{
-          "total_competing_olympians" => 3,
-          "average_weight" => %{
-            "unit" => "kg",
-            "male_olympians" => 95.0,
-            "female_olympians" => 80.0
-          },
-          "average_age" => 30.0
-        }
-      }
-
-      assert json_response(conn, 200) == expected
+      assert result = json_response(conn, 200)["olympian_stats"]
+      assert result["total_competing_olympians"] == 3
+      assert result["average_weight"]["unit"] == "kg"
+      assert Decimal.eq?(result["average_weight"]["male_olympians"], Decimal.from_float(95.0))
+      assert Decimal.eq?(result["average_weight"]["female_olympians"], Decimal.from_float(80.0))
+      assert Decimal.eq?(result["average_age"], Decimal.from_float(30.0))
     end
   end
 end
