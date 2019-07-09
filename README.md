@@ -75,6 +75,29 @@ Sample response:
 
 Additionally, the endpoint accepts an optional parameter, `age`, with the values of either `youngest` or `oldest`. When passed, the endpoint will only return the youngest or oldest olympian in the system in the array of olympians.
 
+### GET /api/v1/olympian_stats
+
+Provides statistical information regarding the olympians within the application, including the following information:
+
+- The total count of olympians within the application
+- The average weight of olympians by sex
+- The average age of all olympians
+
+Sample response:
+``` JSON
+{
+  "olympian_stats": {
+    "total_competing_olympians": 3062,
+    "average_weight": {
+      "unit": "kg",
+      "male_olympians": 75.4,
+      "female_olympians": 70.2
+    },
+    "average_age": 26.3
+  }
+}
+```
+
 ## Original Requirements
 
 (Requirements Originally found [here](https://github.com/dionew1/backend-curriculum-site/blob/gh-pages/module4/projects/take_home_challenge/prompts/olympic_spec.md))

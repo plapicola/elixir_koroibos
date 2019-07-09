@@ -67,6 +67,22 @@ defmodule Koroibos.Olympian do
     )
   end
 
+  @doc """
+  Fetches the statistics for the total count of olympians, average height for olympians by sex, and average age of olympians in the system
+  """
+  @spec all_olympian_stats() :: map()
+  def all_olympian_stats do
+    Repo.one(
+      from o in Olympian,
+      select: %{
+        total_competing_olympians: count(o.id),
+        average_male_weight: fragment("AVG(CASE WHEN ? = ? THEN ? ELSE NULL END)", o.sex, ^0, o.weight),
+        average_female_weight: fragment("AVG(CASE WHEN ? = ? THEN ? ELSE NULL END)", o.sex, ^1, o.weight),
+        average_age: avg(o.age)
+      }
+    )
+  end
+
   # Wrapper function to return the base query used in `all_with_medals/0`, `youngest/0`, and `oldest/0`
   @spec base_olympians_query() :: Ecto.Query
   defp base_olympians_query do
