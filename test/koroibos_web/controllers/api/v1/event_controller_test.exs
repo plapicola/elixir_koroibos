@@ -22,7 +22,7 @@ defmodule KoroibosWeb.Api.V1.EventControllerTest do
       assert [sport_1, sport_2] = response
       assert is_map(sport_1)
       assert sport_1["sport"] == "Taekwondo"
-      assert sport_1["events"] == [%{id: sparring.id, name: sparring.name}]
+      assert sport_1["events"] == [%{"id" => sparring.id, "name" => sparring.name}]
       assert length(sport_2["events"]) == 2
     end
   end
