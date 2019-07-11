@@ -16,7 +16,12 @@ defmodule KoroibosWeb.Api.V1.MedalistControllerTest do
       {:ok, event: event, no_medals: no_medals, mike: mike, ian: ian}
     end
 
-    test "Returns the name of the event and the name, team, age, and medal of all medalists", %{conn: conn, event: event, mike: mike, ian: ian} do
+    test "Returns the name of the event and the name, team, age, and medal of all medalists", %{
+      conn: conn,
+      event: event,
+      mike: mike,
+      ian: ian
+    } do
       conn = get(conn, "/api/v1/events/#{event.id}/medalists")
 
       expected = %{

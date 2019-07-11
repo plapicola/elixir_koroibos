@@ -74,12 +74,14 @@ defmodule Koroibos.Olympian do
   def all_olympian_stats do
     Repo.one(
       from o in Olympian,
-      select: %{
-        total_competing_olympians: count(o.id),
-        average_male_weight: fragment("AVG(CASE WHEN ? = ? THEN ? ELSE NULL END)", o.sex, ^0, o.weight),
-        average_female_weight: fragment("AVG(CASE WHEN ? = ? THEN ? ELSE NULL END)", o.sex, ^1, o.weight),
-        average_age: avg(o.age)
-      }
+        select: %{
+          total_competing_olympians: count(o.id),
+          average_male_weight:
+            fragment("AVG(CASE WHEN ? = ? THEN ? ELSE NULL END)", o.sex, ^0, o.weight),
+          average_female_weight:
+            fragment("AVG(CASE WHEN ? = ? THEN ? ELSE NULL END)", o.sex, ^1, o.weight),
+          average_age: avg(o.age)
+        }
     )
   end
 

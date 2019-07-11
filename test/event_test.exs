@@ -39,11 +39,17 @@ defmodule Koroibos.EventTest do
       event_1 = %Event{name: "Sparring", sport_id: sport_1.id} |> Repo.insert!()
       event_2 = %Event{name: "100M Freestyle", sport_id: sport_2.id} |> Repo.insert!()
       event_3 = %Event{name: "100M Backstroke", sport_id: sport_2.id} |> Repo.insert!()
-      {:ok, taekwondo: sport_1, swimming: sport_2, sparring: event_1, freestyle: event_2, backstroke: event_3}
+
+      {:ok,
+       taekwondo: sport_1,
+       swimming: sport_2,
+       sparring: event_1,
+       freestyle: event_2,
+       backstroke: event_3}
     end
 
     test "Returns an index of all events in the application grouped by sport", setup do
-      result = Event.all_by_sport
+      result = Event.all_by_sport()
 
       assert is_list(result)
       assert length(result) == 2
@@ -67,7 +73,8 @@ defmodule Koroibos.EventTest do
       {:ok, event: event, no_medals: no_medals, mike: mike, ian: ian}
     end
 
-    test "Returns the name of the event corresponding to the id with the associated medalists and their team", setup do
+    test "Returns the name of the event corresponding to the id with the associated medalists and their team",
+         setup do
       assert {:ok, event} = Event.get_with_medalists(setup.event.id)
       assert event.name == setup.event.name
       assert [medalist_1, medalist_2] = event.medalists

@@ -24,8 +24,8 @@ defmodule Koroibos.Event do
   def all_by_sport do
     Repo.all(
       from s in Koroibos.Sport,
-      join: e in assoc(s, :events),
-      preload: [events: e]
+        join: e in assoc(s, :events),
+        preload: [events: e]
     )
   end
 
@@ -37,11 +37,11 @@ defmodule Koroibos.Event do
   def get_with_medalists(id) do
     Repo.one(
       from events in Event,
-      left_join: medalists in assoc(events, :medalists),
-      left_join: olympians in assoc(medalists, :olympian),
-      left_join: teams in assoc(olympians, :team),
-      where: events.id == ^id,
-      preload: [medalists: {medalists, olympian: {olympians, team: teams}}]
+        left_join: medalists in assoc(events, :medalists),
+        left_join: olympians in assoc(medalists, :olympian),
+        left_join: teams in assoc(olympians, :team),
+        where: events.id == ^id,
+        preload: [medalists: {medalists, olympian: {olympians, team: teams}}]
     )
     |> case do
       nil -> {:error, id}

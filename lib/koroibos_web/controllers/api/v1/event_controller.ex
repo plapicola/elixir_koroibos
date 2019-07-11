@@ -4,6 +4,6 @@ defmodule KoroibosWeb.Api.V1.EventController do
   alias Koroibos.Event
 
   def index(conn, _params) do
-    conn |> render("index.json", %{sports: Event.all_by_sport})
+    conn |> render("index.json", %{sports: Event.all_by_sport()})
   end
 end

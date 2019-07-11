@@ -11,7 +11,9 @@ defmodule Koroibos.Api.V1.OlympianStatsControllerTest do
       {:ok, male_1: male_olympian_1, male_2: male_olympian_2, female_1: female_olympian}
     end
 
-    test "Returns the total olympians in the system, along with average weight and age", %{conn: conn} do
+    test "Returns the total olympians in the system, along with average weight and age", %{
+      conn: conn
+    } do
       conn = get(conn, "/api/v1/olympian_stats")
 
       assert result = json_response(conn, 200)["olympian_stats"]
