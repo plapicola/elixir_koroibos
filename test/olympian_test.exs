@@ -191,7 +191,7 @@ defmodule Koroibos.OlympianTest do
     end
 
     test "Returns the count, average age by sex, and average age of all olympians" do
-      result = Olympian.all_olympian_stats
+      result = Olympian.all_olympian_stats()
 
       assert is_map(result)
       assert result.total_competing_olympians == 3
