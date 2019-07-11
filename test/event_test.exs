@@ -70,20 +70,10 @@ defmodule Koroibos.EventTest do
     test "Returns the name of the event corresponding to the id with the associated medalists and their team", setup do
       assert {:ok, event} = Event.get_with_medalists(setup.event.id)
       assert event.name == setup.event.name
-      assert event.medalists == [
-        %{
-          name: setup.ian.name,
-          team: "Canada",
-          age: setup.ian.age,
-          medal: :Gold
-        },
-        %{
-          name: setup.mike.name,
-          team: "USA",
-          age: setup.mike.age,
-          medal: :Silver
-        }
-      ]
+      assert [medalist_1, medalist_2] = event.medalists
+      assert medalist_1.medal == :Gold
+      assert medalist_1.olympian.name == setup.ian.name
+      assert medalist_1.olympian.team.name == "Canada"
     end
 
     test "Returns an empty array if there are no medalists", setup do
