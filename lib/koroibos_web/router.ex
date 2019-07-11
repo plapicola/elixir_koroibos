@@ -10,8 +10,10 @@ defmodule KoroibosWeb.Router do
 
     scope "/v1", V1, as: :v1 do
       resources "/olympians", OlympianController, only: [:index]
-      get "olympian_stats", OlympianStatsController, :index
-      resources "/events", EventController, only: [:index]
+      get "/olympian_stats", OlympianStatsController, :index
+      resources "/events", EventController, only: [:index] do
+        get "/medalists", MedalistController, only: [:index]
+      end
     end
   end
 end

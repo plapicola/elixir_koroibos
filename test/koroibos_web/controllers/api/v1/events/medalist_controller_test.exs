@@ -1,4 +1,4 @@
-defmodule KoroibosWeb.Api.V1.Events.MedalistControllerTest do
+defmodule KoroibosWeb.Api.V1.MedalistControllerTest do
   use KoroibosWeb.ConnCase
 
   alias Koroibos.{Repo, Event, Team, Olympian, EventMedalist}
