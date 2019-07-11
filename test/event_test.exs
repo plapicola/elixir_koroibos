@@ -1,7 +1,7 @@
 defmodule Koroibos.EventTest do
   use Koroibos.DataCase
 
-  alias Koroibos.{Event, Sport}
+  alias Koroibos.{Event, Sport, Olympian, EventMedalist, Team}
 
   @valid_attrs %{name: "An Event", sport_id: 1}
 
@@ -51,6 +51,49 @@ defmodule Koroibos.EventTest do
       assert sport_1.name == setup.taekwondo.name
       assert sport_1.events == [setup.sparring]
       assert sport_2.events == [setup.freestyle, setup.backstroke]
+    end
+  end
+
+  describe "get_with_medalists" do
+    setup do
+      event = %Event{name: "100M Sprint"} |> Repo.insert!()
+      no_medals = %Event{name: "Hurdles"} |> Repo.insert!()
+      usa = %Team{name: "USA"} |> Repo.insert!()
+      canada = %Team{name: "Canada"} |> Repo.insert!()
+      mike = %Olympian{name: "Mike", age: 28, team_id: usa.id} |> Repo.insert!()
+      ian = %Olympian{name: "Ian", age: 30, team_id: canada.id} |> Repo.insert!()
+      %EventMedalist{event_id: event.id, olympian_id: ian.id, medal: :Gold} |> Repo.insert!()
+      %EventMedalist{event_id: event.id, olympian_id: mike.id, medal: :Silver} |> Repo.insert!()
+      {:ok, event: event, no_medals: no_medals, mike: mike, ian: ian}
+    end
+
+    test "Returns the name of the event corresponding to the id with the associated medalists and their team", setup do
+      assert {:ok, event} = Event.get_with_medalists(setup.event.id)
+      assert event.name == setup.event.name
+      assert event.medalists == [
+        %{
+          name: setup.ian.name,
+          team: "Canada",
+          age: setup.ian.age,
+          medal: :Gold
+        },
+        %{
+          name: setup.mike.name,
+          team: "USA",
+          age: setup.mike.age,
+          medal: :Silver
+        }
+      ]
+    end
+
+    test "Returns an empty array if there are no medalists", setup do
+      assert {:ok, event} = Event.get_with_medalists(setup.no_medals.id)
+      assert event.name == setup.no_medals.name
+      assert event.medalists == []
+    end
+
+    test "Returns an error if the id is not found" do
+      assert {:error, -1} = Event.get_with_medalists(-1)
     end
   end
 end
