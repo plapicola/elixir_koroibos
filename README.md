@@ -135,6 +135,44 @@ Sample response:
 }
 ```
 
+### GET /api/v1/events/:id/medalists
+
+Provides the name of the event associated with the `id` provided, with a list of all medalists from the event. Medalist information includes the following:
+
+- Name of the medalist
+- Age of the medalist
+- Name of the team the medalist represents
+- The medal awarded to the medalist
+
+Sample response:
+``` JSON
+{
+  "event": "Badminton Mixed Doubles",
+  "medalists": [
+      {
+        "name": "Tontowi Ahmad",
+        "team": "Indonesia-1",
+        "age": 29,
+        "medal": "Gold"
+      },
+      {
+        "name": "Chan Peng Soon",
+        "team": "Malaysia",
+        "age": 28,
+        "medal": "Silver"
+      }
+    ]
+}
+```
+
+In the event that an invalid `id` is provided, the endpoint returns a `404` status code as well as an error message indicating the event was unable to be located.
+
+``` JSON
+{
+  "error": "Event not found"
+}
+```
+
 ## Original Requirements
 
 (Requirements Originally found [here](https://github.com/dionew1/backend-curriculum-site/blob/gh-pages/module4/projects/take_home_challenge/prompts/olympic_spec.md))
