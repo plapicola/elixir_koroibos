@@ -12,7 +12,7 @@ defmodule KoroibosWeb.Router do
       resources "/olympians", OlympianController, only: [:index]
       get "/olympian_stats", OlympianStatsController, :index
       resources "/events", EventController, only: [:index] do
-        get "/medalists", MedalistController, only: [:index]
+        get "/medalists", MedalistController, :index
       end
     end
   end

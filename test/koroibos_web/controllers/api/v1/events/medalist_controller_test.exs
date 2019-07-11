@@ -56,5 +56,11 @@ defmodule KoroibosWeb.Api.V1.MedalistControllerTest do
 
       assert json_response(conn, 404) == %{"error" => "Event not found"}
     end
+
+    test "Returns a 404 if a non integer id is provided", %{conn: conn} do
+      conn = get(conn, "/api/v1/events/swimming/medalists")
+
+      assert json_response(conn, 404) == %{"error" => "Event not found"}
+    end
   end
 end
